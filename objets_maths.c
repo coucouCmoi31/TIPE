@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <math.h>
 
 #include "objets_maths.h"
 
@@ -24,12 +25,6 @@ struct planinf{
 struct sphere{
     pt_t* centre;
     float rayon;
-};
-
-struct vect_cyl{
-    float r;
-    float teta;
-    float phi;
 };
 
 pt_t* sp_pt(float a, float b, float c){
@@ -62,11 +57,6 @@ sph_t* sp_sph(float r, pt_t* O){
     return Sp;
 }
 
-vect_cyl_t* sp_vect_cyl(vect_t* v){
-    vect_cyl_t* vc = malloc(sizeof(vect_cyl_t));
-    
-}
-
 void free_pt(pt_t* A){
     free(A);
 }
@@ -85,4 +75,3 @@ void free_sph(sph_t* A){
     free_pt(A->centre);
     free(A);
 }
-
