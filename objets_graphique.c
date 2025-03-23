@@ -1,10 +1,5 @@
-#include <stdlib.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <stdio.h>
-
-#include "ecran.h"
 #include "objets_maths.h"
+#include "objets_graphique.h"
 
 struct bloc_ecran{
     pt_t* A;
