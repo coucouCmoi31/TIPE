@@ -6,5 +6,5 @@
 #include "affichage.h"
 
 int MART_SetPixel(SDL_Renderer* renderer){
-    
+
 }
