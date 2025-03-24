@@ -6,7 +6,6 @@
 #include <assert.h>
 #include <stdio.h>
 
-
 /*toutes les structures sont dans le tas*/
 struct point;
 typedef struct point pt_t;
@@ -19,6 +18,9 @@ typedef struct planinf plan_i;
 
 struct sphere;
 typedef struct sphere sph_t;
+
+// struct demi_droite;
+// typedef struct demi_droite dd_t;
 
 /*crée un point de coordonées (a,b,c)*/
 pt_t* sp_pt(float a, float b, float c);
@@ -43,5 +45,15 @@ void free_sph(sph_t* A);
 
 /*crée un vecteur à partir de deux points D départ, A arrivée*/
 vect_t* vect_from_points(pt_t* D, pt_t* A);
+
+/*renvoie le point où la droite formée de dep et direc et le plan se croisent, modifiant la valeur de sortie*/
+/*renvoie 1: à fonctionné; 0: le point est derrière la droite*/
+int cr_vect_plan(pt_t* dep, vect_t* direc, plan_i* plan, pt_t* sortie);
+
+/*renvoie le point où la droite formée de dep et direc et la sphère se croisent, modifiant la valeur de sortie*/
+/*renvoie 1: à fonctionné; 0: le point est derrière la droite ou on est dans la sphère*/
+int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie);
+
+
 
 #endif
