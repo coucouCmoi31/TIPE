@@ -30,6 +30,7 @@ int main (){
     obj_sph_t* sphere = sp_obj_sph(sp_sph(500, sp_pt(1000, 0, 0)), rouge);
 
     MART_SetColorWindow(renderer, blanc);
+    Mart_ColorSphere(renderer, sphere, e);
     SDL_RenderPresent(renderer);
 
     while(events.type != SDL_KEYUP && events.type != SDL_QUIT){

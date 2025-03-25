@@ -7,16 +7,30 @@
 #include <stdio.h>
 
 /*toutes les structures sont dans le tas*/
-struct point;
+struct point{
+    float x;
+    float y;
+    float z;
+};
 typedef struct point pt_t;
 
-struct vect;
+struct vect{
+    float vx;
+    float vy;
+    float vz;
+};
 typedef struct vect vect_t;
 
-struct planinf;
+struct planinf{
+    pt_t* A;
+    vect_t* n;
+};
 typedef struct planinf plan_i;
 
-struct sphere;
+struct sphere{
+    pt_t* centre;
+    float rayon;
+};
 typedef struct sphere sph_t;
 
 // struct demi_droite;
@@ -54,6 +68,14 @@ int cr_vect_plan(pt_t* dep, vect_t* direc, plan_i* plan, pt_t* sortie);
 /*renvoie 1: à fonctionné; 0: le point est derrière la droite ou on est dans la sphère*/
 int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie);
 
+int cr_vect_l(vect_t* normal, vect_t* res);
 
+int cr_vect_h(vect_t* normal, vect_t* res);
+
+int normalise_vect(vect_t* v);
+
+int deplace_pt(pt_t* p, vect_t* v);
+
+int copy_pt(pt_t* src, pt_t* dst);
 
 #endif

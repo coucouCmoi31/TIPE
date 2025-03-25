@@ -6,34 +6,6 @@
 
 #include "objets_maths.h"
 
-struct point{
-    float x;
-    float y;
-    float z;
-};
-
-struct vect{
-    float vx;
-    float vy;
-    float vz;
-};
-
-struct planinf{
-    pt_t* A;
-    vect_t* n;
-};
-
-struct sphere{
-    pt_t* centre;
-    float rayon;
-};
-
-// struct demi_droite{
-//     pt_t* depart;
-//     vect_t* v_dir;
-// };
-
-
 pt_t* sp_pt(float a, float b, float c){
     pt_t* P = malloc(sizeof(pt_t));
     P->x = a;
@@ -105,9 +77,9 @@ int cr_vect_plan(pt_t* dep, vect_t* direc, plan_i* plan, pt_t* sortie){
 }
 
 int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie){
-    float a = powf(direc->vx, 2.0) + powf(direc->vy, 2.0) + powf(direc->vy, 2.0);
+    float a = powf(direc->vx, 2.0) + powf(direc->vy, 2.0) + powf(direc->vz, 2.0);
     float b = 2*(direc->vx * (dep->x - sphe->centre->x) + direc->vy * (dep->y - sphe->centre->y) + direc->vz * (dep->z - sphe->centre->z));
-    float c = powf((dep->x - sphe->centre->x), 2.0) + powf((dep->y - sphe->centre->y),2.0) + powf((dep->z - sphe->centre->z),2.0);
+    float c = powf((dep->x - sphe->centre->x), 2.0) + powf((dep->y - sphe->centre->y),2.0) + powf((dep->z - sphe->centre->z),2.0) - powf(sphe->rayon, 2.0);
     float delta = powf(b, 2.0) - 4*a*c;
     if (delta <= 0.0){
         return 0;
@@ -122,5 +94,41 @@ int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie){
         sortie->z = dep->z + racine * direc->vz ;
         return 1;
     }
+}
+
+int cr_vect_l(vect_t* normal, vect_t* res){
+    res->vx = - normal->vx;
+    res->vy = normal->vy;
+    res->vz = 0;
+    return 1;    
+}
+
+int cr_vect_h(vect_t* normal, vect_t* res){
+    res->vx = normal->vx * normal->vz;
+    res->vy = normal->vy * normal->vz;
+    res->vz = - (normal->vx*normal->vx - normal->vy*normal->vy); 
+    return 1;
+}
+
+int normalise_vect(vect_t* v){
+    float n = sqrtf(v->vx*v->vx + v->vy*v->vy + v->vz*v->vz);
+    v->vx /= n;
+    v->vy /= n;
+    v->vz /= n;
+    return 1;
+}
+
+int deplace_pt(pt_t* p, vect_t* v){
+    p->x += v->vx;
+    p->y += v->vy;
+    p->z += v->vz;
+    return 1;
+}
+
+int copy_pt(pt_t* src, pt_t* dst){
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+    return 1;
 }
 
