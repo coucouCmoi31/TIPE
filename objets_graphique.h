@@ -1,15 +1,22 @@
 #ifndef objet_simu
-#define objet_simu = 10
+#define objet_simu
 
 #include <SDL2/SDL.h>
-#include "objets_graphique.c"
 #include "objets_maths.h"
 
 /*toutes les structures sont dans le tas*/
-struct bloc_ecran;
+struct bloc_ecran{
+    pt_t* A;
+    plan_i* plan;
+    int hp; /*la demi hauteur en px*/
+    int lp; /*la demi largueur en px*/
+};
 typedef struct bloc_ecran bloc_ecran_t;
 
-struct obj_sph;
+struct obj_sph{
+    SDL_Color c;
+    sph_t* sph;
+};
 typedef struct obj_sph obj_sph_t;
 
 /*cree un bloc pour l'ecran d'origine A en de plan de centre B de dimention h et l en px*/

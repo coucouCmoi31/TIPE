@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 #include "fen.h"
 
 int MART_init(SDL_Window **window, SDL_Renderer **renderer, int w, int h){

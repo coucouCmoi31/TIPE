@@ -2,6 +2,7 @@
 #include "objets_graphique.h"
 #include "objets_maths.h"
 #include "affichage.h"
+#include <SDL2/SDL.h>
 
 int main (){
     SDL_Window* fen = NULL;
@@ -29,6 +30,7 @@ int main (){
     obj_sph_t* sphere = sp_obj_sph(sp_sph(500, sp_pt(1000, 0, 0)), rouge);
 
     MART_SetColorWindow(renderer, blanc);
+    SDL_RenderPresent(renderer);
 
     while(events.type != SDL_KEYUP && events.type != SDL_QUIT){
         SDL_PollEvent( &events );

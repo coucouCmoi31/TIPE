@@ -1,17 +1,6 @@
 #include "objets_maths.h"
 #include "objets_graphique.h"
-
-struct bloc_ecran{
-    pt_t* A;
-    plan_i* plan;
-    int hp; /*la demi hauteur en px*/
-    int lp; /*la demi largueur en px*/
-};
-
-struct obj_sph{
-    SDL_Color c;
-    sph_t* sph;
-};
+#include <SDL2/SDL.h>
 
 bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l){
     bloc_ecran_t* e = malloc(sizeof(bloc_ecran_t));
