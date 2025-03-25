@@ -8,6 +8,11 @@ struct bloc_ecran{
     int lp; /*la demi largueur en px*/
 };
 
+typedef struct obj_sph{
+    SDL_Color c;
+    sph_t* sph;
+} obj_sph_t;
+
 bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l){
     bloc_ecran_t* e = malloc(sizeof(bloc_ecran_t));
     e->A = A;
@@ -17,8 +22,21 @@ bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l){
     return e;
 }
 
+obj_sph_t* sp_obj_sph(sph_t* sph, SDL_Color c){
+    obj_sph_t* Sh = malloc(sizeof(obj_sph_t));
+    Sh->sph = sph;
+    Sh->c = c;
+    return Sh;
+}
+
+
 void free_bloc_ecran(bloc_ecran_t* e){
     free_plan(e->plan);
     free_pt(e->A);
     free(e);
+}
+
+void free_obj_shp(obj_sph_t* sphere){
+    free_sph(sphere->sph);
+    free(sphere);
 }
