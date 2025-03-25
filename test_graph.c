@@ -25,9 +25,9 @@ int main (){
     SDL_Color noir = {0, 0, 0, 255};
 
     pt_t* A = sp_pt(0, 0, 0);
-    pt_t* B = sp_pt(500, 0, 0);
+    pt_t* B = sp_pt(1000, 0, 0);
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
-    obj_sph_t* sphere = sp_obj_sph(sp_sph(500, sp_pt(1000, 0, 0)), rouge);
+    obj_sph_t* sphere = sp_obj_sph(sp_sph(10, sp_pt(100, 0, 10)), rouge);
 
     MART_SetColorWindow(renderer, blanc);
     Mart_ColorSphere(renderer, sphere, e);
