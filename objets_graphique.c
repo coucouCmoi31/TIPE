@@ -8,10 +8,10 @@ struct bloc_ecran{
     int lp; /*la demi largueur en px*/
 };
 
-typedef struct obj_sph{
+struct obj_sph{
     SDL_Color c;
     sph_t* sph;
-} obj_sph_t;
+};
 
 bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l){
     bloc_ecran_t* e = malloc(sizeof(bloc_ecran_t));
