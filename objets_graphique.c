@@ -18,6 +18,21 @@ obj_sph_t* sp_obj_sph(sph_t* sph, SDL_Color c){
     return Sh;
 }
 
+spirit_t* sp_spirit_vide(){
+    spirit_t* s = malloc(sizeof(spirit_t));
+    s->max_spirit = 16;
+    s->list_sph = malloc(16*sizeof(obj_sph_t*));
+    s->n_sph = 0;
+    return s;
+}
+
+void agrandie_taille_max_spirit(spirit_t* s){
+    if (s->n_sph + 1 >= s->max_spirit){
+        s->max_spirit *= 2;
+        s->list_sph = realloc(s->list_sph, s->max_spirit*sizeof(obj_sph_t*));
+    }
+}
+
 
 void free_bloc_ecran(bloc_ecran_t* e){
     free_plan(e->plan);
@@ -28,4 +43,12 @@ void free_bloc_ecran(bloc_ecran_t* e){
 void free_obj_shp(obj_sph_t* sphere){
     free_sph(sphere->sph);
     free(sphere);
+}
+
+void free_all_spirit(spirit_t* s){
+    for (int i = 0; i<s->n_sph; i++){
+        free_obj_shp(s->list_sph[i]);
+    }
+    free(s->list_sph);
+    free(s);
 }
