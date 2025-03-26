@@ -97,8 +97,8 @@ int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie){
 }
 
 int cr_vect_l(vect_t* normal, vect_t* res){
-    res->vx = - normal->vx;
-    res->vy = normal->vy;
+    res->vx = normal->vy;
+    res->vy = - normal->vx;
     res->vz = 0;
     return 1;    
 }
@@ -106,7 +106,7 @@ int cr_vect_l(vect_t* normal, vect_t* res){
 int cr_vect_h(vect_t* normal, vect_t* res){
     res->vx = normal->vx * normal->vz;
     res->vy = normal->vy * normal->vz;
-    res->vz = - (normal->vx*normal->vx - normal->vy*normal->vy); 
+    res->vz = normal->vy*normal->vy - normal->vx*normal->vx; 
     return 1;
 }
 

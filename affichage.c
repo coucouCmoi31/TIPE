@@ -37,7 +37,7 @@ int Mart_ColorSphere(SDL_Renderer* renderer, obj_sph_t* sph, bloc_ecran_t* e){
     vect_t* v_h = sp_vect(0, 0, 0);
     cr_vect_h(e->plan->n, v_h);
     normalise_vect(v_h);
-    pt_t* D = sp_pt(e->plan->A->x - v_h->vx*h - v_l->vx*l , e->plan->A->y - v_h->vy*h - v_l->vy*l, e->plan->A->z - v_h->vz*h - v_l->vz*l);
+    pt_t* D = sp_pt(e->plan->A->x - v_h->vx*e->hp - v_l->vx*e->lp , e->plan->A->y - v_h->vy*e->hp - v_l->vy*e->lp, e->plan->A->z - v_h->vz*e->hp - v_l->vz*e->lp);
     pt_t* C = sp_pt(0, 0, 0);
     for (int i = 0; i < h; i++){
         copy_pt(D, C);
