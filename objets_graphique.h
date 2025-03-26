@@ -19,6 +19,13 @@ struct obj_sph{
 };
 typedef struct obj_sph obj_sph_t;
 
+struct obj_plan
+{
+    SDL_Color c;
+    plan_i* plan;
+};
+typedef struct obj_plan obj_plan_i;
+
 struct spirit{
     int max_spirit;
     int n_sph;
@@ -31,6 +38,8 @@ bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l);
 
 obj_sph_t* sp_obj_sph(sph_t* sph, SDL_Color c);
 
+obj_plan_i* sp_obj_plan(plan_i* plan, SDL_Color c);
+
 spirit_t* sp_spirit_vide();
 
 void agrandie_taille_max_spirit(spirit_t* s);
@@ -38,6 +47,8 @@ void agrandie_taille_max_spirit(spirit_t* s);
 void free_obj_shp(obj_sph_t* sphere);
 
 void free_bloc_ecran(bloc_ecran_t* e);
+
+void free_obj_plan(obj_plan_i* p);
 
 void free_all_spirit(spirit_t* s);
 

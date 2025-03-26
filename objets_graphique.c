@@ -18,6 +18,13 @@ obj_sph_t* sp_obj_sph(sph_t* sph, SDL_Color c){
     return Sh;
 }
 
+obj_plan_i* sp_obj_plan(plan_i* plan, SDL_Color c){
+    obj_plan_i* Pl = malloc(sizeof(obj_plan_i));
+    Pl->plan = plan;
+    Pl->c = c;
+    return Pl;
+}
+
 spirit_t* sp_spirit_vide(){
     spirit_t* s = malloc(sizeof(spirit_t));
     s->max_spirit = 16;
@@ -43,6 +50,11 @@ void free_bloc_ecran(bloc_ecran_t* e){
 void free_obj_shp(obj_sph_t* sphere){
     free_sph(sphere->sph);
     free(sphere);
+}
+
+void free_obj_plan(obj_plan_i* p){
+    free_plan(p->plan);
+    free(p);
 }
 
 void free_all_spirit(spirit_t* s){

@@ -25,11 +25,13 @@ int main (){
     SDL_Color noir = {0, 0, 0, 255};
 
     pt_t* A = sp_pt(0, 0, 500);
-    pt_t* B = sp_pt(1000, 0, 500);
+    pt_t* B = sp_pt(1000, 0, 400);
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
-    obj_sph_t* sphere = sp_obj_sph(sp_sph(200, sp_pt(1000, 0, 500)), rouge);
+    obj_sph_t* sphere = sp_obj_sph(sp_sph(100, sp_pt(1000, 0, 500)), rouge);
+    obj_plan_i* pl = sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert);
 
     MART_SetColorWindow(renderer, blanc);
+    Mart_ColorPlan(renderer, pl, e);
     Mart_ColorSphere(renderer, sphere, e);
     SDL_RenderPresent(renderer);
 
