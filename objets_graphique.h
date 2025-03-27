@@ -44,6 +44,8 @@ spirit_t* sp_spirit_vide();
 
 void agrandie_taille_max_spirit(spirit_t* s);
 
+void deplace_ecran(bloc_ecran_t* e, float dx, float dy, float dz);
+
 void free_obj_shp(obj_sph_t* sphere);
 
 void free_bloc_ecran(bloc_ecran_t* e);

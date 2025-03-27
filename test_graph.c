@@ -5,8 +5,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-void print(){
-    
+void print(SDL_Renderer* renderer, TTF_Font* police, char* txt, int cx, int cy, SDL_Color c){
+    SDL_Surface* surface = TTF_RenderText_Solid(police, txt, c);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    SDL_Rect r = {cx, cy, cx+surface->w/2, cy+surface->h/2};
+    SDL_RenderCopy(renderer, texture, NULL, &r);
+
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
 }
 
 int main (){
@@ -41,10 +48,10 @@ int main (){
         goto Quit;
     }
 
-    pt_t* A = sp_pt(0, 0, 500);
-    pt_t* B = sp_pt(1000, 000, 500);
+    pt_t* A = sp_pt(0, 0, 800);
+    pt_t* B = sp_pt(500, 000, 800);
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
-    obj_sph_t* sphere = sp_obj_sph(sp_sph(100, sp_pt(1000, 0, 500)), rouge);
+    obj_sph_t* sphere = sp_obj_sph(sp_sph(100, sp_pt(1000, 0, 800)), rouge);
     obj_plan_i* pl = sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert);
 
     MART_SetColorWindow(renderer, blanc);
@@ -70,7 +77,19 @@ int main (){
             case SDL_KEYDOWN:
                 if (events.key.keysym.sym == SDLK_SPACE){
                     prog = false;
-                }
+                } else if (events.key.keysym.sym == SDLK_UP){
+                    deplace_ecran(e, 100, 0, 0);
+                } else if (events.key.keysym.sym == SDLK_DOWN){
+                    deplace_ecran(e, -100, 0, 0);
+                } else if (events.key.keysym.sym == SDLK_RIGHT){
+                    deplace_ecran(e, 0, -100, 0);
+                } else if (events.key.keysym.sym == SDLK_LEFT){
+                    deplace_ecran(e, 0, 100, 0);
+                } else if (events.key.keysym.sym == SDLK_z){
+                    deplace_ecran(e, 0, 0, 100);
+                } else if (events.key.keysym.sym == SDLK_s){
+                    deplace_ecran(e, 0, 0, -100);
+                } 
             }
         }
         MART_SetColorWindow(renderer, blanc);
@@ -79,9 +98,7 @@ int main (){
         Mart_ColorSphere(renderer, sphere, e);
 
         sprintf(aff, "fps : %d", fps);
-        /*
         print(renderer, police, aff, 10, 10, noir);
-        */
         SDL_RenderPresent(renderer);
 
         last_tick = ticks;

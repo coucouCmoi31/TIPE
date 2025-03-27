@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-lm -lSDL2_ttf -Ofast
+CFLAGS=-lm -lSDL2_ttf -Ofast -g
 CPPFLAGS = `pkg-config --cflags --libs sdl2 SDL2_ttf`
 
 main: 

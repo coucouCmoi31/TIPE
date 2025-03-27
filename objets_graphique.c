@@ -40,6 +40,15 @@ void agrandie_taille_max_spirit(spirit_t* s){
     }
 }
 
+void deplace_ecran(bloc_ecran_t* e, float dx, float dy, float dz){
+    e->A->x += dx;
+    e->A->y += dy;
+    e->A->z += dz;
+    e->plan->A->x += dx;
+    e->plan->A->y += dy;
+    e->plan->A->z += dz;
+}
+
 
 void free_bloc_ecran(bloc_ecran_t* e){
     free_plan(e->plan);
