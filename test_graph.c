@@ -94,8 +94,10 @@ int main (){
         }
         MART_SetColorWindow(renderer, blanc);
 
+        /*
         Mart_ColorPlan(renderer, pl, e);
         Mart_ColorSphere(renderer, sphere, e);
+        */
 
         sprintf(aff, "fps : %d", fps);
         print(renderer, police, aff, 10, 10, noir);
