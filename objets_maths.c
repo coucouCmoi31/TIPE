@@ -106,7 +106,7 @@ int cr_vect_l(vect_t* normal, vect_t* res){
 int cr_vect_h(vect_t* normal, vect_t* res){
     res->vx = normal->vx * normal->vz;
     res->vy = normal->vy * normal->vz;
-    res->vz = normal->vy*normal->vy - normal->vx*normal->vx; 
+    res->vz = -fabsf(normal->vy*normal->vy - normal->vx*normal->vx); 
     return 1;
 }
 

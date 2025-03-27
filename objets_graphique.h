@@ -10,6 +10,7 @@ struct bloc_ecran{
     plan_i* plan;
     int hp; /*la demi hauteur en px*/
     int lp; /*la demi largueur en px*/
+    float d;
 };
 typedef struct bloc_ecran bloc_ecran_t;
 
@@ -45,6 +46,14 @@ spirit_t* sp_spirit_vide();
 void agrandie_taille_max_spirit(spirit_t* s);
 
 void deplace_ecran(bloc_ecran_t* e, float dx, float dy, float dz);
+
+void deplace_ecran_vect(bloc_ecran_t* e, float n, float l, float h);
+
+void deplace_ecran_semi_vect(bloc_ecran_t* e, float n);
+
+void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd);
+
+void rotation_hauteur_ecran(bloc_ecran_t*e, float teta_rd);
 
 void free_obj_shp(obj_sph_t* sphere);
 

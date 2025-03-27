@@ -1,5 +1,6 @@
 #include "objets_maths.h"
 #include "objets_graphique.h"
+#include "math.h"
 #include <SDL2/SDL.h>
 
 bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l){
@@ -8,6 +9,8 @@ bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l){
     e->hp = fen_px_h/2;
     e->lp = fen_px_l/2;
     e->plan = sp_plan(vect_from_points(A, B), B);
+    e->d = sqrtf(e->plan->n->vx*e->plan->n->vx + e->plan->n->vy*e->plan->n->vy + e->plan->n->vy*e->plan->n->vz);
+    normalise_vect(e->plan->n);
     return e;
 }
 
@@ -49,6 +52,56 @@ void deplace_ecran(bloc_ecran_t* e, float dx, float dy, float dz){
     e->plan->A->z += dz;
 }
 
+void deplace_ecran_vect(bloc_ecran_t* e, float n, float l, float h){
+    vect_t* v_l = sp_vect(0, 0, 0);
+    cr_vect_l(e->plan->n, v_l);
+    normalise_vect(v_l);
+    vect_t* v_h = sp_vect(0, 0, 0);
+    cr_vect_h(e->plan->n, v_h);
+    normalise_vect(v_h);
+
+    deplace_ecran(e, e->plan->n->vx*n + v_l->vx*l + v_h->vx*h, e->plan->n->vy*n + v_l->vy*l + v_h->vy*h, e->plan->n->vz*n + v_l->vz*l + v_h->vz*h);
+    
+    free_vect(v_h);
+    free_vect(v_l);
+}
+
+void deplace_ecran_semi_vect(bloc_ecran_t* e, float n){
+    vect_t* v = sp_vect(e->plan->n->vx, e->plan->n->vy, 0);
+    normalise_vect(v);
+    deplace_ecran(e, v->vx*n, v->vy*n, v->vz*n);
+    free_vect(v);
+}
+
+void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd){
+    vect_t* v_l = sp_vect(0, 0, 0);
+    cr_vect_l(e->plan->n, v_l);
+    normalise_vect(v_l);
+    vect_t* new_v = sp_vect(sinf(teta_rd)*v_l->vx+cosf(teta_rd)*e->plan->n->vx, sinf(teta_rd)*v_l->vy+cosf(teta_rd)*e->plan->n->vy, e->plan->n->vz);
+    normalise_vect(new_v);
+    free_vect(e->plan->n);
+    e->plan->n = new_v;
+    free_pt(e->plan->A);
+    e->plan->A = sp_pt(e->A->x + new_v->vx*e->d, e->A->y + new_v->vy*e->d, e->A->z + new_v->vz*e->d);
+    free_vect(v_l);
+}
+
+void rotation_hauteur_ecran(bloc_ecran_t*e, float teta_rd){
+    float phi = asinf(e->plan->n->vz);
+    if (phi + teta_rd > 1) {
+        phi = 1.4;
+    } else if (phi + teta_rd < -1){
+        phi = -1.4;
+    } else {
+        phi += teta_rd;
+    } 
+    vect_t* new_v = sp_vect(cosf(phi)*e->plan->n->vx, cosf(phi)*e->plan->n->vy, sinf(phi));
+    normalise_vect(new_v);
+    free_vect(e->plan->n);
+    e->plan->n = new_v;
+    free_pt(e->plan->A);
+    e->plan->A = sp_pt(e->A->x + new_v->vx*e->d, e->A->y + new_v->vy*e->d, e->A->z + new_v->vz*e->d);
+}
 
 void free_bloc_ecran(bloc_ecran_t* e){
     free_plan(e->plan);
