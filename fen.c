@@ -5,10 +5,6 @@
 #include "fen.h"
 
 int MART_init(SDL_Window **window, SDL_Renderer **renderer, int w, int h){
-    if (0 != SDL_Init(SDL_INIT_VIDEO)){
-        printf("Erreur SDL_Init : %s \n", SDL_GetError());
-        return -1;
-    }
     if (0 != SDL_CreateWindowAndRenderer(w, h, SDL_WINDOW_SHOWN, window, renderer)){
         printf("Erreur SDL_CreateWindowAndRenderer : %s \n", SDL_GetError());
         return -1;

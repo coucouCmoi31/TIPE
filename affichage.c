@@ -25,6 +25,7 @@ int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* 
         printf("elle est deriere \n");
     }
     */
+    free_pt(sortie);
     return 0;
 }
 
@@ -38,6 +39,7 @@ int Mart_ColorPlanOnePixiel(SDL_Renderer* renderer, int cx, int cy, obj_plan_i* 
         printf("elle est deriere \n");
     }
     */
+    free_pt(sortie);
     return 0;
 }
 
@@ -55,12 +57,18 @@ int Mart_ColorSphere(SDL_Renderer* renderer, obj_sph_t* sph, bloc_ecran_t* e){
     for (int i = 0; i < h; i++){
         copy_pt(D, C);
         for(int j = 0; j < l; j++){
-            MART_ColorSphereOnePixel(renderer, j, i, sph, e->A, vect_from_points(e->A, C));
+            vect_t* vect = vect_from_points(e->A, C);
+            MART_ColorSphereOnePixel(renderer, j, i, sph, e->A, vect);
+            free_vect(vect);
             deplace_pt(C, v_l);
             /*printf("%d x %d\n", j, i);*/
         }
         deplace_pt(D, v_h);
     }
+    free_vect(v_h);
+    free_vect(v_l);
+    free_pt(D);
+    free_pt(C);
     return 0;
 }
 
@@ -78,12 +86,18 @@ int Mart_ColorPlan(SDL_Renderer* renderer, obj_plan_i* pl, bloc_ecran_t* e){
     for (int i = 0; i < h; i++){
         copy_pt(D, C);
         for(int j = 0; j < l; j++){
-            Mart_ColorPlanOnePixiel(renderer, j, i, pl, e->A, vect_from_points(e->A, C));
+            vect_t* vect = vect_from_points(e->A, C);
+            Mart_ColorPlanOnePixiel(renderer, j, i, pl, e->A, vect);
+            free_vect(vect);
             deplace_pt(C, v_l);
             /*printf("%d x %d\n", j, i);*/
         }
         deplace_pt(D, v_h);
     }
+    free_vect(v_h);
+    free_vect(v_l);
+    free_pt(D);
+    free_pt(C);
     return 0;
 }
 
