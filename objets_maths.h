@@ -68,6 +68,12 @@ int cr_vect_plan(pt_t* dep, vect_t* direc, plan_i* plan, pt_t* sortie);
 /*renvoie 1: à fonctionné; 0: le point est derrière la droite ou on est dans la sphère*/
 int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie);
 
+/*Renvoie la normale d'un vecteur*/
+float normale(vect_t* v);
+
+/*renvoie le produit scalaire de deux vecteurs*/
+float pro_scal(vect_t* a, vect_t* b);
+
 int cr_vect_l(vect_t* normal, vect_t* res);
 
 int cr_vect_h(vect_t* normal, vect_t* res);

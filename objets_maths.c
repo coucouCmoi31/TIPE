@@ -96,6 +96,14 @@ int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie){
     }
 }
 
+float normale(vect_t* v){
+    return sqrtf(v->vx*v->vx + v->vy*v->vy + v->vz*v->vz);
+}
+
+float pro_scal(vect_t* a, vect_t* b){
+    return (a->vx*a->vx)+(a->vy*a->vy)+(a->vz*a->vz)+(b->vx*b->vx)+(b->vy*b->vy)+(b->vz*b->vz)-((a->vx-b->vx)*(a->vx-b->vx)+(a->vy-b->vy)*(a->vy-b->vy)+(a->vz-b->vz)*(a->vz-b->vz));
+}
+
 int cr_vect_l(vect_t* normal, vect_t* res){
     res->vx = normal->vy;
     res->vy = - normal->vx;
