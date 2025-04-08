@@ -104,6 +104,12 @@ float pro_scal(vect_t* a, vect_t* b){
     return (a->vx*a->vx)+(a->vy*a->vy)+(a->vz*a->vz)+(b->vx*b->vx)+(b->vy*b->vy)+(b->vz*b->vz)-((a->vx-b->vx)*(a->vx-b->vx)+(a->vy-b->vy)*(a->vy-b->vy)+(a->vz-b->vz)*(a->vz-b->vz));
 }
 
+vect_t* norm_sph(sph_t* sph, pt_t* contact){
+    vect_t* sortie = vect_from_points(sph->centre, contact);
+    assert( 1 == normalise_vect(sortie));
+    return sortie;
+}
+
 int cr_vect_l(vect_t* normal, vect_t* res){
     res->vx = normal->vy;
     res->vy = - normal->vx;

@@ -74,6 +74,9 @@ float normale(vect_t* v);
 /*renvoie le produit scalaire de deux vecteurs*/
 float pro_scal(vect_t* a, vect_t* b);
 
+/*renvoie le vecteur normal d'une sphère en un point de contact (le vecteur normal est unitaire)*/
+vect_t* norm_sph(sph_t* sph, pt_t* contact);
+
 int cr_vect_l(vect_t* normal, vect_t* res);
 
 int cr_vect_h(vect_t* normal, vect_t* res);
