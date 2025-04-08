@@ -14,6 +14,14 @@ struct lumiere{
 };
 typedef struct lumiere lum_t;
 
+/*valeur de la luminosité en un point: Calculs implémentés pour l'instant: 
+X distance de la lumière
+X scalaire avec l'angle lumière/normale
+X reflet direct dans l'oeil
+X lumière cachées (ombre) 
+X multiples rebonds sur diverses surfaces (récursif) 
+*/
+float point_lum()
 
 
 
