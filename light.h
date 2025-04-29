@@ -10,9 +10,25 @@
 /*toutes les structures sont dans le tas*/
 struct lumiere{
     float intensité;
-    pt_t position;
+    pt_t* position;
 };
 typedef struct lumiere lum_t;
+
+/*le type sphere ou plan infini*/
+
+
+
+/*des listes chainées de chaque type*/
+struct maillon_lumiere {
+    struct maillon_lumiere* suivant;
+    lum_t* light;
+};
+typedef struct maillon_lumiere mai_lum_t;
+
+struct liste_ch_lum{
+    mai_lum_t* tete;
+};
+typedef struct liste_ch_lum ch_lum_t;
 
 /*valeur de la luminosité en un point: Calculs implémentés pour l'instant: 
 X distance de la lumière
@@ -21,7 +37,8 @@ X reflet direct dans l'oeil
 X lumière cachées (ombre) 
 X multiples rebonds sur diverses surfaces (récursif) 
 */
-float point_lum()
+/*pour un point à la surface d'une sphere*/
+float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera);
 
 
 
