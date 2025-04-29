@@ -6,19 +6,21 @@
 #include "objets_maths.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "light.h"
 
-int MART_SetPixel(SDL_Renderer* renderer, int cx, int cy, SDL_Color color){
+int MART_SetPixel(SDL_Renderer* renderer, int cx, int cy, SDL_Color color, float rate){
     SDL_SetRenderTarget(renderer, NULL);
-    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    SDL_SetRenderDrawColor(renderer, fmax(0, fmin(255, color.r +255*(rate))), fmax(0, fmin(255, color.g +255*(rate))), fmax(0, fmin(255, color.b +255*(rate))), color.a);
     SDL_RenderDrawPoint(renderer, cx, cy);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     return 0;
 }
 
-int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* sphere, pt_t* origine, vect_t* direction){
+int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* sphere, pt_t* origine, vect_t* direction, ch_lum_t* leslumi){
     pt_t* sortie = sp_pt(0, 0, 0);
     if (cr_vect_sphere(origine, direction, sphere->sph, sortie) == 1){
-        MART_SetPixel(renderer, cx, cy, sphere->c);
+        // float taux = point_lum_sph(sortie, sphere->sph, leslumi, origine);
+        MART_SetPixel(renderer, cx, cy, sphere->c, 0);
     }
     /*
     else {
@@ -32,7 +34,7 @@ int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* 
 int Mart_ColorPlanOnePixiel(SDL_Renderer* renderer, int cx, int cy, obj_plan_i* plan, pt_t* origine, vect_t* direction){
     pt_t* sortie = sp_pt(0, 0, 0);
     if (cr_vect_plan(origine, direction, plan->plan, sortie) == 1){
-        MART_SetPixel(renderer, cx, cy, plan->c);
+        MART_SetPixel(renderer, cx, cy, plan->c, 0.5);
     }
     /*
     else {
@@ -43,7 +45,7 @@ int Mart_ColorPlanOnePixiel(SDL_Renderer* renderer, int cx, int cy, obj_plan_i* 
     return 0;
 }
 
-int Mart_ColorSphere(SDL_Renderer* renderer, obj_sph_t* sph, bloc_ecran_t* e){
+int Mart_ColorSphere(SDL_Renderer* renderer, obj_sph_t* sph, bloc_ecran_t* e, ch_lum_t* leslumi){
     int h = e->hp * 2;
     int l = e->lp * 2;
     vect_t* v_l = sp_vect(0, 0, 0);
@@ -58,7 +60,7 @@ int Mart_ColorSphere(SDL_Renderer* renderer, obj_sph_t* sph, bloc_ecran_t* e){
         copy_pt(D, C);
         for(int j = 0; j < l; j++){
             vect_t* vect = vect_from_points(e->A, C);
-            MART_ColorSphereOnePixel(renderer, j, i, sph, e->A, vect);
+            MART_ColorSphereOnePixel(renderer, j, i, sph, e->A, vect, leslumi);
             free_vect(vect);
             deplace_pt(C, v_l);
             /*printf("%d x %d\n", j, i);*/

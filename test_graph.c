@@ -4,6 +4,7 @@
 #include "affichage.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include "light.h"
 
 void print(SDL_Renderer* renderer, TTF_Font* police, char* txt, int cx, int cy, SDL_Color c){
     SDL_Surface* surface = TTF_RenderText_Solid(police, txt, c);
@@ -54,9 +55,20 @@ int main (){
     obj_sph_t* sphere = sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge);
     obj_plan_i* pl = sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert);
 
+    ch_lum_t* leslumi;
+    leslumi = malloc(sizeof(ch_lum_t));
+    leslumi->tete = malloc(sizeof(mai_lum_t));
+    leslumi->tete->suivant = NULL;
+    leslumi->tete->light = malloc(sizeof(lum_t));
+    leslumi->tete->light->intensité = 1.0;
+    leslumi->tete->light->position = malloc(sizeof(pt_t));
+    leslumi->tete->light->position->x = 1200.0;
+    leslumi->tete->light->position->y = 0.0;
+    leslumi->tete->light->position->z = 1600.0;
+
     MART_SetColorWindow(renderer, blanc);
     Mart_ColorPlan(renderer, pl, e);
-    Mart_ColorSphere(renderer, sphere, e);
+    Mart_ColorSphere(renderer, sphere, e, leslumi);
 
     char aff[50];
     Uint32 ticks = SDL_GetTicks();
@@ -103,7 +115,7 @@ int main (){
         MART_SetColorWindow(renderer, blanc);
 
         Mart_ColorPlan(renderer, pl, e);
-        Mart_ColorSphere(renderer, sphere, e);
+        Mart_ColorSphere(renderer, sphere, e, leslumi);
 
         sprintf(aff, "fps : %d", fps);
         print(renderer, police, aff, 10, 10, noir);

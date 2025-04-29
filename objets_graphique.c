@@ -74,17 +74,17 @@ void deplace_ecran_semi_vect(bloc_ecran_t* e, float n){
 }
 
 void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd){
-    vect_t* v_l = sp_vect(0, 0, 0);
-    cr_vect_l(e->plan->n, v_l);
+    float z = e->plan->n->vz;
+    e->plan->n->vz = 0;
     normalise_vect(e->plan->n);
-    normalise_vect(v_l);
-    vect_t* new_v = sp_vect(sinf(teta_rd)*v_l->vx+cosf(teta_rd)*e->plan->n->vx, sinf(teta_rd)*v_l->vy+cosf(teta_rd)*e->plan->n->vy, sinf(teta_rd)*v_l->vz+cosf(teta_rd)*e->plan->n->vz);
+    float phi = asinf(e->plan->n->vx)+teta_rd;
+    vect_t* new_v = sp_vect(sinf(phi), cosf(phi), 0);
+    new_v->vz = z;
     normalise_vect(new_v);
     free_vect(e->plan->n);
     e->plan->n = new_v;
     free_pt(e->plan->A);
     e->plan->A = sp_pt(e->A->x + new_v->vx*e->d, e->A->y + new_v->vy*e->d, e->A->z + new_v->vz*e->d);
-    free_vect(v_l);
 }
 
 void rotation_hauteur_ecran(bloc_ecran_t*e, float teta_rd){
