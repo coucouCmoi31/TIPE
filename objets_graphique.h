@@ -34,6 +34,16 @@ struct spirit{
 };
 typedef struct spirit spirit_t;
 
+/* free les elements et leur constructeur */
+void free_obj_shp(obj_sph_t* sphere);
+
+void free_bloc_ecran(bloc_ecran_t* e);
+
+void free_obj_plan(obj_plan_i* p);
+
+void free_all_spirit(spirit_t* s);
+
+
 /*cree un bloc pour l'ecran d'origine A en de plan de centre B de dimention h et l en px*/
 bloc_ecran_t* sp_ecran(pt_t* A, pt_t* B, int fen_px_h, int fen_px_l);
 
@@ -61,15 +71,7 @@ void deplace_ecran_semi_vect(bloc_ecran_t* e, float n);
 /* tourne l'écran dans la largeur selon teta_rd */
 void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd);
 
-/* tourne  */
+/* tourne l'écran dans la hauteur selon teta_rd */
 void rotation_hauteur_ecran(bloc_ecran_t*e, float teta_rd);
-
-void free_obj_shp(obj_sph_t* sphere);
-
-void free_bloc_ecran(bloc_ecran_t* e);
-
-void free_obj_plan(obj_plan_i* p);
-
-void free_all_spirit(spirit_t* s);
 
 #endif

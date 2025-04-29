@@ -77,14 +77,19 @@ float pro_scal(vect_t* a, vect_t* b);
 /*renvoie le vecteur normal d'une sphère en un point de contact (le vecteur normal est unitaire)*/
 vect_t* norm_sph(sph_t* sph, pt_t* contact);
 
+/* calcule le vectaur largeur par rapport a normal en le met dans res */
 int cr_vect_l(vect_t* normal, vect_t* res);
 
+/* calcule le vectaur hauteur par rapport a normal en le met dans res */
 int cr_vect_h(vect_t* normal, vect_t* res);
 
+/* normalize le vercteur à 1 */
 int normalise_vect(vect_t* v);
 
+/* deplace p de v */
 int deplace_pt(pt_t* p, vect_t* v);
 
+/* copy un pt */
 int copy_pt(pt_t* src, pt_t* dst);
 
 #endif
