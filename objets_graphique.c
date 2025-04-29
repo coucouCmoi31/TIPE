@@ -76,8 +76,9 @@ void deplace_ecran_semi_vect(bloc_ecran_t* e, float n){
 void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd){
     vect_t* v_l = sp_vect(0, 0, 0);
     cr_vect_l(e->plan->n, v_l);
+    normalise_vect(e->plan->n);
     normalise_vect(v_l);
-    vect_t* new_v = sp_vect(sinf(teta_rd)*v_l->vx+cosf(teta_rd)*e->plan->n->vx, sinf(teta_rd)*v_l->vy+cosf(teta_rd)*e->plan->n->vy, e->plan->n->vz);
+    vect_t* new_v = sp_vect(sinf(teta_rd)*v_l->vx+cosf(teta_rd)*e->plan->n->vx, sinf(teta_rd)*v_l->vy+cosf(teta_rd)*e->plan->n->vy, sinf(teta_rd)*v_l->vz+cosf(teta_rd)*e->plan->n->vz);
     normalise_vect(new_v);
     free_vect(e->plan->n);
     e->plan->n = new_v;
@@ -87,11 +88,12 @@ void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd){
 }
 
 void rotation_hauteur_ecran(bloc_ecran_t*e, float teta_rd){
+    normalise_vect(e->plan->n);
     float phi = asinf(e->plan->n->vz);
-    if (phi + teta_rd > 1) {
-        phi = 1.4;
-    } else if (phi + teta_rd < -1){
-        phi = -1.4;
+    if (phi + teta_rd > 0.5) {
+        phi = 0.5;
+    } else if (phi + teta_rd < -0.5){
+        phi = -0.5;
     } else {
         phi += teta_rd;
     } 

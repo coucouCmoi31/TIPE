@@ -75,7 +75,7 @@ int main (){
             case SDL_QUIT:
                 prog = false;
             case SDL_KEYDOWN:
-                if (events.key.keysym.sym == SDLK_SPACE){
+                if (events.key.keysym.sym == SDLK_ESCAPE){
                     prog = false;
                 } else if (events.key.keysym.sym == SDLK_UP){
                     deplace_ecran_semi_vect(e, 100);
@@ -95,7 +95,7 @@ int main (){
                     rotation_largeur_ecran(e, -0.1);
                 } else if (events.key.keysym.sym == SDLK_LCTRL){
                     deplace_ecran_vect(e, 0, 0, 100);
-                } else if (events.key.keysym.sym == SDLK_LSHIFT){
+                } else if (events.key.keysym.sym == SDLK_SPACE){
                     deplace_ecran_vect(e, 0, 0, -100);
                 }
             }
