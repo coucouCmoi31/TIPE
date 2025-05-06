@@ -19,8 +19,8 @@ int MART_SetPixel(SDL_Renderer* renderer, int cx, int cy, SDL_Color color, float
 int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* sphere, pt_t* origine, vect_t* direction, ch_lum_t* leslumi){
     pt_t* sortie = sp_pt(0, 0, 0);
     if (cr_vect_sphere(origine, direction, sphere->sph, sortie) == 1){
-        // float taux = point_lum_sph(sortie, sphere->sph, leslumi, origine);
-        MART_SetPixel(renderer, cx, cy, sphere->c, 0);
+        float taux = point_lum_sph(sortie, sphere->sph, leslumi, origine);
+        MART_SetPixel(renderer, cx, cy, sphere->c, taux);
     }
     /*
     else {
@@ -103,4 +103,31 @@ int Mart_ColorPlan(SDL_Renderer* renderer, obj_plan_i* pl, bloc_ecran_t* e){
     return 0;
 }
 
+int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e){
+    int h = e->hp * 2;
+    int l = e->lp * 2;
+    vect_t* v_l = sp_vect(0, 0, 0);
+    cr_vect_l(e->plan->n, v_l);
+    normalise_vect(v_l);
+    vect_t* v_h = sp_vect(0, 0, 0);
+    cr_vect_h(e->plan->n, v_h);
+    normalise_vect(v_h);
+    pt_t* D = sp_pt(e->plan->A->x - v_h->vx*e->hp - v_l->vx*e->lp , e->plan->A->y - v_h->vy*e->hp - v_l->vy*e->lp, e->plan->A->z - v_h->vz*e->hp - v_l->vz*e->lp);
+    pt_t* C = sp_pt(0, 0, 0);
+    for (int i = 0; i < h; i++){
+        copy_pt(D, C);
+        for(int j = 0; j < l; j++){
+            vect_t* vect = vect_from_points(e->A, C);
+            //MART_ColorSphereOnePixel(renderer, j, i, sph, e->A, vect, leslumi);
+            free_vect(vect);
+            deplace_pt(C, v_l);
+            /*printf("%d x %d\n", j, i);*/
+        }
+        deplace_pt(D, v_h);
+    }
+    free_vect(v_h);
+    free_vect(v_l);
+    free_pt(D);
+    free_pt(C);
+}
 

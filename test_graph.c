@@ -42,6 +42,7 @@ int main (){
     SDL_Color blanc = {255, 255, 255, 255};
     SDL_Color vert = {0, 255, 0, 255};
     SDL_Color noir = {0, 0, 0, 255};
+    SDL_Color bleu_ciel = {86, 207, 248, 255};
 
     TTF_Font *police = TTF_OpenFont("police.ttf", 50);
     if (police == NULL){
@@ -52,7 +53,8 @@ int main (){
     pt_t* A = sp_pt(0, 0, 800);
     pt_t* B = sp_pt(500, 0, 800);
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
-    obj_sph_t* sphere = sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge);
+    obj_sph_t* sphere1 = sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge);
+    obj_sph_t* sphere2 = sp_obj_sph(sp_sph(500, sp_pt(2000, 1000, 800)), noir);
     obj_plan_i* pl = sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert);
 
     ch_lum_t* leslumi;
@@ -66,9 +68,10 @@ int main (){
     leslumi->tete->light->position->y = 0.0;
     leslumi->tete->light->position->z = 1600.0;
 
-    MART_SetColorWindow(renderer, blanc);
+    MART_SetColorWindow(renderer, bleu_ciel);
     Mart_ColorPlan(renderer, pl, e);
-    Mart_ColorSphere(renderer, sphere, e, leslumi);
+    Mart_ColorSphere(renderer, sphere2, e, leslumi);
+    Mart_ColorSphere(renderer, sphere1, e, leslumi);
 
     char aff[50];
     Uint32 ticks = SDL_GetTicks();
@@ -112,10 +115,11 @@ int main (){
                 }
             }
         }
-        MART_SetColorWindow(renderer, blanc);
+        MART_SetColorWindow(renderer, bleu_ciel);
 
         Mart_ColorPlan(renderer, pl, e);
-        Mart_ColorSphere(renderer, sphere, e, leslumi);
+        Mart_ColorSphere(renderer, sphere2, e, leslumi);
+        Mart_ColorSphere(renderer, sphere1, e, leslumi);
 
         sprintf(aff, "fps : %d", fps);
         print(renderer, police, aff, 10, 10, noir);
@@ -132,7 +136,8 @@ int main (){
     }
 
     free_obj_plan(pl);
-    free_obj_shp(sphere);
+    free_obj_shp(sphere1);
+    free_obj_shp(sphere2);
     free_bloc_ecran(e);
 
     statut = EXIT_SUCCESS;

@@ -30,17 +30,23 @@ obj_plan_i* sp_obj_plan(plan_i* plan, SDL_Color c){
 
 spirit_t* sp_spirit_vide(){
     spirit_t* s = malloc(sizeof(spirit_t));
-    s->max_spirit = 16;
+    s->max_spirit_sph = 16;
     s->list_sph = malloc(16*sizeof(obj_sph_t*));
     s->n_sph = 0;
     return s;
 }
 
 void agrandie_taille_max_spirit(spirit_t* s){
-    if (s->n_sph + 1 >= s->max_spirit){
-        s->max_spirit *= 2;
-        s->list_sph = realloc(s->list_sph, s->max_spirit*sizeof(obj_sph_t*));
+    if (s->n_sph + 1 >= s->max_spirit_sph){
+        s->max_spirit_sph *= 2;
+        s->list_sph = realloc(s->list_sph, s->max_spirit_sph*sizeof(obj_sph_t*));
     }
+}
+
+void ajouter_shp_spirit(spirit_t* s, obj_sph_t* sph){
+    agrandie_taille_max_spirit(s);
+    s->list_sph[s->n_sph] = sph;
+    s->n_sph += 1;
 }
 
 void deplace_ecran(bloc_ecran_t* e, float dx, float dy, float dz){
@@ -122,7 +128,7 @@ void free_obj_plan(obj_plan_i* p){
 }
 
 void free_all_spirit(spirit_t* s){
-    for (int i = 0; i<s->n_sph; i++){
+    for (int i = 0; i < s->n_sph; i++){
         free_obj_shp(s->list_sph[i]);
     }
     free(s->list_sph);
