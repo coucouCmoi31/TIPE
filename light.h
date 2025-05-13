@@ -30,6 +30,17 @@ struct liste_ch_lum{
 };
 typedef struct liste_ch_lum ch_lum_t;
 
+struct HSL{
+    float H; //la couleur, entre 0 et 360
+    float S; //saturation, entre 0 et 1
+    float L; //luminosité, entre 0 et 1
+}
+
+/*passe de RGB à HSL*/
+
+HSL_t* RGB_to_HSL(SDL_color* col);
+
+
 /*valeur de la luminosité en un point: Calculs implémentés pour l'instant: 
 X distance de la lumière
 X scalaire avec l'angle lumière/normale

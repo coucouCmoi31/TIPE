@@ -6,6 +6,44 @@
 
 #include "objets_maths.h"
 
+max(int a, int b, int c){
+    if a >= b {
+        if a >= c {
+            return a;
+        } else {
+            return c;
+        }
+    } else {
+        if b >= c {
+            return b;
+        } else {
+            return c;
+        }
+    }
+}
+min(int a, int b, int c){
+    if a >= b {
+        if c >= b {
+            return b;
+        } else {
+            return c;
+        }
+    } else {
+        if a >= c {
+            return c;
+        } else {
+            return a;
+        }
+    }
+}
+abs(float a){
+    if a > 0 {
+        return a;
+    } else {
+        return (-1)*a;
+    }
+}
+
 pt_t* sp_pt(float a, float b, float c){
     pt_t* P = malloc(sizeof(pt_t));
     P->x = a;
