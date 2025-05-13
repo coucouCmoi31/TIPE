@@ -19,8 +19,8 @@ int MART_SetPixel(SDL_Renderer* renderer, int cx, int cy, SDL_Color color, float
 int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* sphere, pt_t* origine, vect_t* direction, ch_lum_t* leslumi){
     pt_t* sortie = sp_pt(0, 0, 0);
     if (cr_vect_sphere(origine, direction, sphere->sph, sortie) == 1){
-        float taux = point_lum_sph(sortie, sphere->sph, leslumi, origine);
-        MART_SetPixel(renderer, cx, cy, sphere->c, taux);
+        // float taux = point_lum_sph(sortie, sphere->sph, leslumi, origine);
+        MART_SetPixel(renderer, cx, cy, sphere->c, 0.5);
     }
     /*
     else {

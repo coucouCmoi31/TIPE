@@ -80,12 +80,14 @@ void deplace_ecran_semi_vect(bloc_ecran_t* e, float n){
 }
 
 void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd){
-    float z = e->plan->n->vz;
+    normalise_vect(e->plan->n);
+    double phi2 = asin(e->plan->n->vz);
     e->plan->n->vz = 0;
     normalise_vect(e->plan->n);
-    float phi = asinf(e->plan->n->vx)+teta_rd;
-    vect_t* new_v = sp_vect(sinf(phi), cosf(phi), 0);
-    new_v->vz = z;
+    double phi = acos(e->plan->n->vx);
+    if (e->plan->n->vy<0){phi = -phi;}
+    phi += teta_rd;
+    vect_t* new_v = sp_vect(cosf(phi2)*cosf(phi), cosf(phi2)*sinf(phi), sinf(phi2));
     normalise_vect(new_v);
     free_vect(e->plan->n);
     e->plan->n = new_v;
@@ -95,15 +97,19 @@ void rotation_largeur_ecran(bloc_ecran_t*e, float teta_rd){
 
 void rotation_hauteur_ecran(bloc_ecran_t*e, float teta_rd){
     normalise_vect(e->plan->n);
-    float phi = asinf(e->plan->n->vz);
-    if (phi + teta_rd > 0.5) {
-        phi = 0.5;
-    } else if (phi + teta_rd < -0.5){
-        phi = -0.5;
+    double phi = asin(e->plan->n->vz);
+    if (phi + teta_rd > 1.5) {
+        phi = 1.5;
+    } else if (phi + teta_rd < -1.5){
+        phi = -1.5;
     } else {
         phi += teta_rd;
     } 
-    vect_t* new_v = sp_vect(cosf(phi)*e->plan->n->vx, cosf(phi)*e->plan->n->vy, sinf(phi));
+    e->plan->n->vz = 0;
+    normalise_vect(e->plan->n);
+    double phi2 = acos(e->plan->n->vx);
+    if (e->plan->n->vy<0){phi2 = -phi2;}
+    vect_t* new_v = sp_vect(cosf(phi)*cosf(phi2), cosf(phi)*sinf(phi2), sinf(phi));
     normalise_vect(new_v);
     free_vect(e->plan->n);
     e->plan->n = new_v;

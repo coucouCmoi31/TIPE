@@ -62,11 +62,11 @@ int main (){
     leslumi->tete = malloc(sizeof(mai_lum_t));
     leslumi->tete->suivant = NULL;
     leslumi->tete->light = malloc(sizeof(lum_t));
-    leslumi->tete->light->intensité = 1.0;
+    leslumi->tete->light->intensité = 5000;
     leslumi->tete->light->position = malloc(sizeof(pt_t));
     leslumi->tete->light->position->x = 1200.0;
     leslumi->tete->light->position->y = 0.0;
-    leslumi->tete->light->position->z = 1600.0;
+    leslumi->tete->light->position->z = 10000.0;
 
     MART_SetColorWindow(renderer, bleu_ciel);
     Mart_ColorPlan(renderer, pl, e);
@@ -105,9 +105,9 @@ int main (){
                 } else if (events.key.keysym.sym == SDLK_s){
                     rotation_hauteur_ecran(e, -0.1);
                 } else if (events.key.keysym.sym == SDLK_q){
-                    rotation_largeur_ecran(e, 0.1);
+                    rotation_largeur_ecran(e, 0.2);
                 } else if (events.key.keysym.sym == SDLK_d){
-                    rotation_largeur_ecran(e, -0.1);
+                    rotation_largeur_ecran(e, -0.2);
                 } else if (events.key.keysym.sym == SDLK_LCTRL){
                     deplace_ecran_vect(e, 0, 0, 100);
                 } else if (events.key.keysym.sym == SDLK_SPACE){

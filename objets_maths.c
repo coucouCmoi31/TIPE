@@ -118,9 +118,13 @@ int cr_vect_l(vect_t* normal, vect_t* res){
 }
 
 int cr_vect_h(vect_t* normal, vect_t* res){
-    res->vx = normal->vx * normal->vz;
-    res->vy = normal->vy * normal->vz;
-    res->vz = -fabsf(normal->vy*normal->vy - normal->vx*normal->vx); 
+    vect_t* v_l = sp_vect(0, 0, 0);
+    cr_vect_l(normal, v_l);
+    normalise_vect(v_l);
+    res->vx = - v_l->vy * normal->vz;
+    res->vy = v_l->vx * normal->vz;
+    res->vz = -fabsf(v_l->vx*normal->vy - v_l->vy*normal->vx); 
+    free_vect(v_l);
     return 1;
 }
 
