@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <stdio.h>
+#include <SDL2/SDL.h>
 #include "objets_maths.h"
 
 /*toutes les structures sont dans le tas*/
