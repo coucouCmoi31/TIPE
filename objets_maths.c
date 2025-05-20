@@ -6,30 +6,32 @@
 
 #include "objets_maths.h"
 
+/*
 max(int a, int b, int c){
-    if a >= b {
-        if a >= c {
+    if (a >= b) {
+        if (a >= c) {
             return a;
         } else {
             return c;
         }
     } else {
-        if b >= c {
+        if (b >= c) {
             return b;
         } else {
             return c;
         }
     }
 }
+
 min(int a, int b, int c){
-    if a >= b {
-        if c >= b {
+    if (a >= b) {
+        if (c >= b) {
             return b;
         } else {
             return c;
         }
     } else {
-        if a >= c {
+        if (a >= c) {
             return c;
         } else {
             return a;
@@ -37,12 +39,13 @@ min(int a, int b, int c){
     }
 }
 abs(float a){
-    if a > 0 {
+    if (a > 0) {
         return a;
     } else {
         return (-1)*a;
     }
 }
+*/
 
 pt_t* sp_pt(float a, float b, float c){
     pt_t* P = malloc(sizeof(pt_t));
@@ -188,3 +191,12 @@ int copy_pt(pt_t* src, pt_t* dst){
     return 1;
 }
 
+int min_distance(pt_t* origine, pt_t* pt1, pt_t* pt2){
+    double d1 = (origine->x-pt1->x)*(origine->x-pt1->x) + (origine->y-pt1->y)*(origine->y-pt1->y) + (origine->z-pt1->z)*(origine->z-pt1->z);
+    double d2 = (origine->x-pt2->x)*(origine->x-pt2->x) + (origine->y-pt2->y)*(origine->y-pt2->y) + (origine->z-pt2->z)*(origine->z-pt2->z);
+    if (d1 < d2) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
