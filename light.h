@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <stdio.h>
+#include <SDL2/SDL.h>
 #include "objets_maths.h"
 
 /*toutes les structures sont dans le tas*/
@@ -29,6 +30,17 @@ struct liste_ch_lum{
     mai_lum_t* tete;
 };
 typedef struct liste_ch_lum ch_lum_t;
+
+struct HSL{
+    float H; //la couleur, entre 0 et 360
+    float S; //saturation, entre 0 et 1
+    float L; //luminosité, entre 0 et 1
+}
+
+/*passe de RGB à HSL*/
+
+HSL_t* RGB_to_HSL(SDL_color* col);
+
 
 /*valeur de la luminosité en un point: Calculs implémentés pour l'instant: 
 X distance de la lumière
