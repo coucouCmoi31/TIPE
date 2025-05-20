@@ -7,7 +7,7 @@ float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera){
     pt_t* source = lums->tete->light->position;
     vect_t* v = vect_from_points(point, source);
     float distance = normale(v);
-    float watt_r = lums->tete->light->intensité / (distance*distance);
+    float watt_r = lums->tete->light->intensité; // / (distance*distance);
     vect_t* n = norm_sph(sphe, point);
     float watt_eff = watt_r * pro_scal(v, n);
 
