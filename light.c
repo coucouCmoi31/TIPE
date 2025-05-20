@@ -20,6 +20,7 @@ float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera){
     return watt_eff;
 }
 
+/*
 HSL_t* RGB_to_HSL(SDL_color* col){
     float R1 = col->r/255;
     float G1 = col->g/255;
@@ -90,3 +91,4 @@ SDL_color* HSL_to_RGB(HSL_t* col){
     return sortie;
     
 }
+*/

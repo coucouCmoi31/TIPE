@@ -8,9 +8,9 @@
 #include <stdlib.h>
 #include "light.h"
 
-int MART_SetPixel(SDL_Renderer* renderer, int cx, int cy, SDL_Color color, float rate){
+int MART_SetPixel(SDL_Renderer* renderer, int cx, int cy, SDL_Color color){
     SDL_SetRenderTarget(renderer, NULL);
-    SDL_SetRenderDrawColor(renderer, fmax(0, fmin(255, color.r +255*(rate))), fmax(0, fmin(255, color.g +255*(rate))), fmax(0, fmin(255, color.b +255*(rate))), color.a);
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawPoint(renderer, cx, cy);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     return 0;
@@ -20,7 +20,7 @@ int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* 
     pt_t* sortie = sp_pt(0, 0, 0);
     if (cr_vect_sphere(origine, direction, sphere->sph, sortie) == 1){
         // float taux = point_lum_sph(sortie, sphere->sph, leslumi, origine);
-        MART_SetPixel(renderer, cx, cy, sphere->c, 0.5);
+        MART_SetPixel(renderer, cx, cy, sphere->c);
     }
     /*
     else {
@@ -34,7 +34,7 @@ int MART_ColorSphereOnePixel(SDL_Renderer* renderer, int cx, int cy, obj_sph_t* 
 int Mart_ColorPlanOnePixiel(SDL_Renderer* renderer, int cx, int cy, obj_plan_i* plan, pt_t* origine, vect_t* direction){
     pt_t* sortie = sp_pt(0, 0, 0);
     if (cr_vect_plan(origine, direction, plan->plan, sortie) == 1){
-        MART_SetPixel(renderer, cx, cy, plan->c, 0.5);
+        MART_SetPixel(renderer, cx, cy, plan->c);
     }
     /*
     else {
@@ -103,6 +103,30 @@ int Mart_ColorPlan(SDL_Renderer* renderer, obj_plan_i* pl, bloc_ecran_t* e){
     return 0;
 }
 
+int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* spirit, pt_t* origine, vect_t* direction){
+    pt_t* sortie = sp_pt(0, 0, 0);
+    pt_t* min_sortie = sp_pt(0, 0, 0);
+    int indice = -1;
+    for (int i = 0; i<spirit->n_sph;i++){
+        if (cr_vect_sphere(origine, direction, spirit->list_sph[i]->sph, sortie) == 1){
+            if (indice == -1){
+                copy_pt(sortie, min_sortie);
+                indice = i;
+            } else if (min_distance(origine, sortie, min_sortie) == 1){
+                copy_pt(sortie, min_sortie);
+                indice = i;
+            }
+        }
+    }
+    // printf("i -> %d \n", indice);
+    if (indice >= 0) {
+        MART_SetPixel(renderer, cx, cy, spirit->list_sph[indice]->c);
+    }
+    free_pt(min_sortie);
+    free_pt(sortie);
+    return 0;
+}
+
 int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e){
     int h = e->hp * 2;
     int l = e->lp * 2;
@@ -118,7 +142,7 @@ int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e){
         copy_pt(D, C);
         for(int j = 0; j < l; j++){
             vect_t* vect = vect_from_points(e->A, C);
-            //MART_ColorSphereOnePixel(renderer, j, i, sph, e->A, vect, leslumi);
+            MART_ColorSpiritOnePixel(renderer, j, i, spirit, e->A, vect);
             free_vect(vect);
             deplace_pt(C, v_l);
             /*printf("%d x %d\n", j, i);*/
