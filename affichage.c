@@ -107,20 +107,30 @@ int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* s
     pt_t* sortie = sp_pt(0, 0, 0);
     pt_t* min_sortie = sp_pt(0, 0, 0);
     int indice = -1;
+    int type = 0;
     for (int i = 0; i<spirit->n_sph;i++){
         if (cr_vect_sphere(origine, direction, spirit->list_sph[i]->sph, sortie) == 1){
-            if (indice == -1){
+            if (indice == -1 || min_distance(origine, sortie, min_sortie) == 1){
                 copy_pt(sortie, min_sortie);
                 indice = i;
-            } else if (min_distance(origine, sortie, min_sortie) == 1){
+                type = 1;
+            }
+        }
+    }
+    for (int i = 0; i<spirit->n_plan;i++){
+        if (cr_vect_plan(origine, direction, spirit->list_plan[i]->plan, sortie) == 1){
+            if (indice == -1 || min_distance(origine, sortie, min_sortie) == 1){
                 copy_pt(sortie, min_sortie);
                 indice = i;
+                type = 2;
             }
         }
     }
     // printf("i -> %d \n", indice);
-    if (indice >= 0) {
+    if (type == 1) {
         MART_SetPixel(renderer, cx, cy, spirit->list_sph[indice]->c);
+    } else if (type == 2){
+        MART_SetPixel(renderer, cx, cy, spirit->list_plan[indice]->c);
     }
     free_pt(min_sortie);
     free_pt(sortie);

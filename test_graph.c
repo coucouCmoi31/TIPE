@@ -56,7 +56,7 @@ int main (){
     spirit_t* spirit = sp_spirit_vide();
     ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge));
     ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2000, 1000, 800)), noir));
-    obj_plan_i* pl = sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert);
+    ajouter_plan_spirit(spirit, sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert));
 
     ch_lum_t* leslumi;
     leslumi = malloc(sizeof(ch_lum_t));
@@ -70,7 +70,6 @@ int main (){
     leslumi->tete->light->position->z = 10000.0;
 
     MART_SetColorWindow(renderer, bleu_ciel);
-    Mart_ColorPlan(renderer, pl, e);
     MART_ColorSpirit(renderer, spirit, e);
 
     char aff[50];
@@ -78,7 +77,7 @@ int main (){
     Uint32 last_tick_prog;
     Uint32 last_tick;
     float fps_prog = 0;
-    int fps = 0;
+    float fps = 0;
     int i = 0;
     bool prog = true;
     while (prog)
@@ -117,10 +116,9 @@ int main (){
         }
         MART_SetColorWindow(renderer, bleu_ciel);
 
-        Mart_ColorPlan(renderer, pl, e);
         MART_ColorSpirit(renderer, spirit, e);
 
-        sprintf(aff, "fps : %d", fps);
+        sprintf(aff, "fps : %.2f", fps);
         print(renderer, police, aff, 10, 10, noir);
         SDL_RenderPresent(renderer);
 
@@ -129,12 +127,11 @@ int main (){
         fps = 1000.0/(ticks - last_tick);
         fps_prog = 1000.0/(ticks - last_tick_prog);
         if (fps_prog>60){
-            SDL_Delay((1000.0*(1/60.0 - 1/fps_prog)));
+            // SDL_Delay((1000.0*(1/30.0 - 1/fps_prog)));
         }
         last_tick_prog = SDL_GetTicks();
     }
 
-    free_obj_plan(pl);
     free_all_spirit(spirit);
     free_bloc_ecran(e);
 

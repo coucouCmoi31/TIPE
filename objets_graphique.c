@@ -33,6 +33,9 @@ spirit_t* sp_spirit_vide(){
     s->max_spirit_sph = 16;
     s->list_sph = malloc(16*sizeof(obj_sph_t*));
     s->n_sph = 0;
+    s->max_spirit_plan = 16;
+    s->list_plan = malloc(16*sizeof(obj_plan_i*));
+    s->n_plan = 0;
     return s;
 }
 
@@ -40,6 +43,9 @@ void agrandie_taille_max_spirit(spirit_t* s){
     if (s->n_sph + 1 >= s->max_spirit_sph){
         s->max_spirit_sph *= 2;
         s->list_sph = realloc(s->list_sph, s->max_spirit_sph*sizeof(obj_sph_t*));
+    } if (s->n_plan+1 >= s->max_spirit_plan){
+        s->max_spirit_plan *= 2;
+        s->list_plan = realloc(s->list_plan, s->max_spirit_plan*sizeof(obj_plan_i*));
     }
 }
 
@@ -47,6 +53,12 @@ void ajouter_shp_spirit(spirit_t* s, obj_sph_t* sph){
     agrandie_taille_max_spirit(s);
     s->list_sph[s->n_sph] = sph;
     s->n_sph += 1;
+}
+
+void ajouter_plan_spirit(spirit_t* s, obj_plan_i* plan){
+    agrandie_taille_max_spirit(s);
+    s->list_plan[s->n_plan] = plan;
+    s->n_plan += 1;
 }
 
 void deplace_ecran(bloc_ecran_t* e, float dx, float dy, float dz){
@@ -136,6 +148,9 @@ void free_obj_plan(obj_plan_i* p){
 void free_all_spirit(spirit_t* s){
     for (int i = 0; i < s->n_sph; i++){
         free_obj_shp(s->list_sph[i]);
+    }
+    for (int i = 0; i <s->n_plan;i++){
+        free_obj_plan(s->list_plan[i]);
     }
     free(s->list_sph);
     free(s);

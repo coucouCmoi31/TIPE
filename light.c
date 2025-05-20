@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-
+    
 float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera){
     pt_t* source = lums->tete->light->position;
     vect_t* v = vect_from_points(point, source);

@@ -31,6 +31,9 @@ struct spirit{
     int max_spirit_sph;
     int n_sph;
     obj_sph_t** list_sph;
+    int max_spirit_plan;
+    int n_plan;
+    obj_plan_i** list_plan;
 };
 typedef struct spirit spirit_t;
 
@@ -61,6 +64,7 @@ void agrandie_taille_max_spirit(spirit_t* s);
 
 /* ajoute sph dans s */
 void ajouter_shp_spirit(spirit_t* s, obj_sph_t* sph);
+void ajouter_plan_spirit(spirit_t* s, obj_plan_i* plan);
 
 /* deplace e selon  (dx, dy, dz) */
 void deplace_ecran(bloc_ecran_t* e, float dx, float dy, float dz);
