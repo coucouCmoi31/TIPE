@@ -42,6 +42,7 @@ int main (){
     SDL_Color blanc = {255, 255, 255, 255};
     SDL_Color vert = {0, 255, 0, 255};
     SDL_Color noir = {0, 0, 0, 255};
+    SDL_Color bleu = {0, 0, 255, 255};
     SDL_Color bleu_ciel = {86, 207, 248, 255};
 
     TTF_Font *police = TTF_OpenFont("police.ttf", 50);
@@ -50,12 +51,17 @@ int main (){
         goto Quit;
     }
 
+    HSL_t couleur_HSL = RGB_to_HSL(bleu);
+    printf("bleu -> H : %f, S : %f, L : %f\n", couleur_HSL.H, couleur_HSL.S, couleur_HSL.L);
+    couleur_HSL = RGB_to_HSL(rouge);
+    printf("rouge -> H : %f, S : %f, L : %f\n", couleur_HSL.H, couleur_HSL.S, couleur_HSL.L);
+
     pt_t* A = sp_pt(0, 0, 800);
     pt_t* B = sp_pt(500, 0, 800);
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
     spirit_t* spirit = sp_spirit_vide();
     ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge));
-    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2000, 1000, 800)), noir));
+    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2000, 1000, 800)), bleu));
     ajouter_plan_spirit(spirit, sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert));
 
     ch_lum_t* leslumi;
@@ -69,8 +75,8 @@ int main (){
     leslumi->tete->light->position->y = 0.0;
     leslumi->tete->light->position->z = 10000.0;
 
-    MART_SetColorWindow(renderer, bleu_ciel);
-    MART_ColorSpirit(renderer, spirit, e, leslumi);
+    // MART_SetColorWindow(renderer, bleu_ciel);
+    // MART_ColorSpirit(renderer, spirit, e, leslumi);
 
     char aff[50];
     Uint32 ticks = SDL_GetTicks();

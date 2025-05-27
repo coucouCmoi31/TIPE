@@ -36,8 +36,8 @@ typedef struct sphere sph_t;
 // struct demi_droite;
 // typedef struct demi_droite dd_t;
 // fonctions min et max sur 3 int, et val absolue de float
-int maxc(int a, int b, int c);
-int minc(int a, int b, int c);
+float maxc(float a, float b, float c);
+float minc(float a, float b, float c);
 
 
 /*crée un point de coordonées (a,b,c)*/

@@ -6,51 +6,53 @@
 #include "objets_maths.h"
     
 float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera){
+    
     pt_t* source = lums->tete->light->position;
     vect_t* v = vect_from_points(point, source);
-    float distance = normale(v);
-    float watt_r = lums->tete->light->intensité; // / (distance*distance);
+    normalise_vect(v);
     vect_t* n = norm_sph(sphe, point);
-    float watt_eff = watt_r * pro_scal(v, n);
+    normalise_vect(n);
+    float watt_eff = pro_scal(v, n);
 
     //FILE* f = fopen("out_lumi.txt", "a");
     //fprintf(f, "-%f-", watt_eff);
     //fclose(f);
-
     free_vect(v);
     free_vect(n);
+    if (watt_eff < 0){
+        return 0;
+    }
     return watt_eff;
 }
 
 HSL_t RGB_to_HSL(SDL_Color col){
-    float R1 = col.r/255;
-    float G1 = col.g/255;
-    float B1 = col.b/255;
-    float Cmax = maxc(R1, G1, B1);
-    float Cmin = minc(R1, G1, B1);
+    float R1 = col.r/255.0;
+    float G1 = col.g/255.0;
+    float B1 = col.b/255.0;
+    float Cmax = fmaxf(R1, fmaxf(G1, B1));
+    float Cmin = fminf(R1, fminf(G1, B1));
     float del = Cmax-Cmin;
-    float L1=(Cmax - Cmin)/2;
+    float L1=(Cmax + Cmin)/2;
     float H1;
     float S1;
-    if (del =  0) {
+    if (del < 0.0001) {
         H1=0;
         S1=0;
     } else {
-        S1=del/(1-abs(2L-1));
-    }
-    if (R1 >= ((G1+B1)/2 + abs(G1-B1))){
-        float temp = (G1-B1)/del;
-        H1=60*(modff(6, &temp));
-    } else if (G1 >= ((R1+B1)/2 + abs(R1-B1))){
-        H1=60*(((B1-R1)/del)+2);
-    } else {
-        H1=60*(((R1-G1)/del)+4);
+        S1=del/(1-abs(2*L1-1));
+        if (R1 == Cmax){
+            float temp = (G1-B1)/del;
+            H1=60*(modff(6, &temp));
+        } else if (G1 == Cmax){
+            H1=60*(((B1-R1)/del)+2);
+        } else {
+            H1=60*(((R1-G1)/del)+4);
+        }
     }
     HSL_t couleur_HSL;
     couleur_HSL.H = H1;
     couleur_HSL.S = S1;
     couleur_HSL.L = L1;
-    printf("H : %f, S : %f, L : %f\n", couleur_HSL.H, couleur_HSL.S, couleur_HSL.L);
     return couleur_HSL;
 }
 

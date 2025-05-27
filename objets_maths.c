@@ -6,7 +6,7 @@
 
 #include "objets_maths.h"
 
-int maxc(int a, int b, int c){
+float maxc(float a, float b, float c){
     if (a >= b) {
         if (a >= c) {
             return a;
@@ -22,7 +22,7 @@ int maxc(int a, int b, int c){
     }
 }
 
-int minc(int a, int b, int c){
+float minc(float a, float b, float c){
     if (a >= b) {
         if (c >= b) {
             return b;
