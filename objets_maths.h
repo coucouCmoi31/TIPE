@@ -35,11 +35,10 @@ typedef struct sphere sph_t;
 
 // struct demi_droite;
 // typedef struct demi_droite dd_t;
+// fonctions min et max sur 3 int, et val absolue de float
+int maxc(int a, int b, int c);
+int minc(int a, int b, int c);
 
-/*fonctions min et max sur 3 int, et val absolue de float */
-max(int a, int b, int c);
-min(int a, int b, int c);
-abs(float a);
 
 /*crée un point de coordonées (a,b,c)*/
 pt_t* sp_pt(float a, float b, float c);
@@ -96,5 +95,8 @@ int deplace_pt(pt_t* p, vect_t* v);
 
 /* copy un pt */
 int copy_pt(pt_t* src, pt_t* dst);
+
+/*  */
+int min_distance(pt_t* origine, pt_t* pt1, pt_t* pt2);
 
 #endif

@@ -53,9 +53,10 @@ int main (){
     pt_t* A = sp_pt(0, 0, 800);
     pt_t* B = sp_pt(500, 0, 800);
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
-    obj_sph_t* sphere1 = sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge);
-    obj_sph_t* sphere2 = sp_obj_sph(sp_sph(500, sp_pt(2000, 1000, 800)), noir);
-    obj_plan_i* pl = sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert);
+    spirit_t* spirit = sp_spirit_vide();
+    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge));
+    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2000, 1000, 800)), noir));
+    ajouter_plan_spirit(spirit, sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert));
 
     ch_lum_t* leslumi;
     leslumi = malloc(sizeof(ch_lum_t));
@@ -69,16 +70,14 @@ int main (){
     leslumi->tete->light->position->z = 10000.0;
 
     MART_SetColorWindow(renderer, bleu_ciel);
-    Mart_ColorPlan(renderer, pl, e);
-    Mart_ColorSphere(renderer, sphere2, e, leslumi);
-    Mart_ColorSphere(renderer, sphere1, e, leslumi);
+    MART_ColorSpirit(renderer, spirit, e, leslumi);
 
     char aff[50];
     Uint32 ticks = SDL_GetTicks();
     Uint32 last_tick_prog;
     Uint32 last_tick;
     float fps_prog = 0;
-    int fps = 0;
+    float fps = 0;
     int i = 0;
     bool prog = true;
     while (prog)
@@ -117,11 +116,9 @@ int main (){
         }
         MART_SetColorWindow(renderer, bleu_ciel);
 
-        Mart_ColorPlan(renderer, pl, e);
-        Mart_ColorSphere(renderer, sphere2, e, leslumi);
-        Mart_ColorSphere(renderer, sphere1, e, leslumi);
+        MART_ColorSpirit(renderer, spirit, e, leslumi);
 
-        sprintf(aff, "fps : %d", fps);
+        sprintf(aff, "fps : %.2f", fps);
         print(renderer, police, aff, 10, 10, noir);
         SDL_RenderPresent(renderer);
 
@@ -130,14 +127,12 @@ int main (){
         fps = 1000.0/(ticks - last_tick);
         fps_prog = 1000.0/(ticks - last_tick_prog);
         if (fps_prog>60){
-            SDL_Delay((1000.0*(1/60.0 - 1/fps_prog)));
+            // SDL_Delay((1000.0*(1/30.0 - 1/fps_prog)));
         }
         last_tick_prog = SDL_GetTicks();
     }
 
-    free_obj_plan(pl);
-    free_obj_shp(sphere1);
-    free_obj_shp(sphere2);
+    free_all_spirit(spirit);
     free_bloc_ecran(e);
 
     statut = EXIT_SUCCESS;
