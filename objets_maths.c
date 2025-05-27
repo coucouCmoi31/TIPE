@@ -6,8 +6,7 @@
 
 #include "objets_maths.h"
 
-/*
-max(int a, int b, int c){
+int maxc(int a, int b, int c){
     if (a >= b) {
         if (a >= c) {
             return a;
@@ -23,7 +22,7 @@ max(int a, int b, int c){
     }
 }
 
-min(int a, int b, int c){
+int minc(int a, int b, int c){
     if (a >= b) {
         if (c >= b) {
             return b;
@@ -38,14 +37,6 @@ min(int a, int b, int c){
         }
     }
 }
-abs(float a){
-    if (a > 0) {
-        return a;
-    } else {
-        return (-1)*a;
-    }
-}
-*/
 
 pt_t* sp_pt(float a, float b, float c){
     pt_t* P = malloc(sizeof(pt_t));

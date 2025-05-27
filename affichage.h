@@ -21,8 +21,8 @@ int Mart_ColorPlanOnePixiel(SDL_Renderer* renderer, int cx, int cy, obj_plan_i* 
 /* affiche un plan */
 int Mart_ColorPlan(SDL_Renderer* renderer, obj_plan_i* pl, bloc_ecran_t* e);
 
-int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* spirit, pt_t* origine, vect_t* direction);
+int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* spirit, pt_t* origine, vect_t* direction, ch_lum_t* leslumi);
 
-int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e);
+int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e, ch_lum_t* leslumi);
 
 #endif

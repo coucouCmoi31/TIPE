@@ -39,7 +39,9 @@ struct HSL{
 typedef struct HSL HSL_t;
 
 /*passe de RGB à HSL*/
-HSL_t* RGB_to_HSL(SDL_Color* col);
+HSL_t RGB_to_HSL(SDL_Color col);
+
+SDL_Color HSL_to_RGB(HSL_t col);
 
 /*valeur de la luminosité en un point: Calculs implémentés pour l'instant: 
 X distance de la lumière

@@ -70,7 +70,7 @@ int main (){
     leslumi->tete->light->position->z = 10000.0;
 
     MART_SetColorWindow(renderer, bleu_ciel);
-    MART_ColorSpirit(renderer, spirit, e);
+    MART_ColorSpirit(renderer, spirit, e, leslumi);
 
     char aff[50];
     Uint32 ticks = SDL_GetTicks();
@@ -116,7 +116,7 @@ int main (){
         }
         MART_SetColorWindow(renderer, bleu_ciel);
 
-        MART_ColorSpirit(renderer, spirit, e);
+        MART_ColorSpirit(renderer, spirit, e, leslumi);
 
         sprintf(aff, "fps : %.2f", fps);
         print(renderer, police, aff, 10, 10, noir);

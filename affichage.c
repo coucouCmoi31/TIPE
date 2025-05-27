@@ -103,7 +103,7 @@ int Mart_ColorPlan(SDL_Renderer* renderer, obj_plan_i* pl, bloc_ecran_t* e){
     return 0;
 }
 
-int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* spirit, pt_t* origine, vect_t* direction){
+int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* spirit, pt_t* origine, vect_t* direction, ch_lum_t* leslumi){
     pt_t* sortie = sp_pt(0, 0, 0);
     pt_t* min_sortie = sp_pt(0, 0, 0);
     int indice = -1;
@@ -128,7 +128,8 @@ int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* s
     }
     // printf("i -> %d \n", indice);
     if (type == 1) {
-        MART_SetPixel(renderer, cx, cy, spirit->list_sph[indice]->c);
+        point_lum_sph(min_sortie, spirit->list_sph[indice]->sph, leslumi, origine);
+        MART_SetPixel(renderer, cx, cy, HSL_to_RGB(RGB_to_HSL(spirit->list_sph[indice]->c)));
     } else if (type == 2){
         MART_SetPixel(renderer, cx, cy, spirit->list_plan[indice]->c);
     }
@@ -137,7 +138,7 @@ int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* s
     return 0;
 }
 
-int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e){
+int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e, ch_lum_t* leslumi){
     int h = e->hp * 2;
     int l = e->lp * 2;
     vect_t* v_l = sp_vect(0, 0, 0);
@@ -152,7 +153,7 @@ int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e){
         copy_pt(D, C);
         for(int j = 0; j < l; j++){
             vect_t* vect = vect_from_points(e->A, C);
-            MART_ColorSpiritOnePixel(renderer, j, i, spirit, e->A, vect);
+            MART_ColorSpiritOnePixel(renderer, j, i, spirit, e->A, vect, leslumi);
             free_vect(vect);
             deplace_pt(C, v_l);
             /*printf("%d x %d\n", j, i);*/
