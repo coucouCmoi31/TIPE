@@ -128,8 +128,10 @@ int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* s
     }
     // printf("i -> %d \n", indice);
     if (type == 1) {
-        point_lum_sph(min_sortie, spirit->list_sph[indice]->sph, leslumi, origine);
-        MART_SetPixel(renderer, cx, cy, HSL_to_RGB(RGB_to_HSL(spirit->list_sph[indice]->c)));
+        float eff = point_lum_sph(min_sortie, spirit->list_sph[indice]->sph, leslumi, origine);
+        HSL_t temp = RGB_to_HSL(spirit->list_sph[indice]->c);
+        temp.L *= eff;
+        MART_SetPixel(renderer, cx, cy, HSL_to_RGB(temp));
     } else if (type == 2){
         MART_SetPixel(renderer, cx, cy, spirit->list_plan[indice]->c);
     }
