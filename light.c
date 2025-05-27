@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <math.h>
+#include "objets_maths.h"
     
 float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera){
     pt_t* source = lums->tete->light->position;
@@ -37,7 +39,8 @@ HSL_t RGB_to_HSL(SDL_Color col){
         S1=del/(1-abs(2L-1));
     }
     if (R1 >= ((G1+B1)/2 + abs(G1-B1))){
-        H1=60*(((G1-B1)/del)/6);
+        float temp = (G1-B1)/del;
+        H1=60*(modff(6, &temp));
     } else if (G1 >= ((R1+B1)/2 + abs(R1-B1))){
         H1=60*(((B1-R1)/del)+2);
     } else {
@@ -47,14 +50,14 @@ HSL_t RGB_to_HSL(SDL_Color col){
     couleur_HSL.H = H1;
     couleur_HSL.S = S1;
     couleur_HSL.L = L1;
+    printf("H : %f, S : %f, L : %f\n", couleur_HSL.H, couleur_HSL.S, couleur_HSL.L);
     return couleur_HSL;
 }
 
 SDL_Color HSL_to_RGB(HSL_t col){
     float C = (1 - abs(2*col.L - 1))*col.S;
     float H1s = col.H / 60;
-    int temp = H1s/2;
-    float X = C * (1 - abs((H1s - 2*temp) - 1));
+    float X = C * (1 - abs(modff(2, &H1s) - 1));
     float m = col.L - C/2;
     float R1;
     float G1;
@@ -101,7 +104,7 @@ float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, sph_t*
     float watt_r = lums->tete->light->intensité; // / (distance*distance);
     float watt_eff = watt_r * pro_scal(v, pl->n);
     for (int i = 0; i < nb_sphe; i++){
-        if cr_vect_sphere(point, v, spheres[i],a_supp) {
+        if (1 == cr_vect_sphere(point, v, spheres[i],a_supp)) {
             watt_eff = watt_eff/2;
         }
     } 
