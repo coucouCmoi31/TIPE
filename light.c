@@ -92,3 +92,20 @@ SDL_Color HSL_to_RGB(HSL_t col){
     return sortie;    
 }
 
+
+float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, sph_t** spheres, int nb_sphe){
+    pt_t* a_supp = malloc(sizeof(pt_t));
+    pt_t* source = lums->tete->light->position;
+    vect_t* v = vect_from_points(point, source);
+    float distance = normale(v);
+    float watt_r = lums->tete->light->intensité; // / (distance*distance);
+    float watt_eff = watt_r * pro_scal(v, pl->n);
+    for (int i = 0; i < nb_sphe; i++){
+        if cr_vect_sphere(point, v, spheres[i],a_supp) {
+            watt_eff = watt_eff/2;
+        }
+    } 
+    free_vect(v);
+    return watt_eff;
+}
+

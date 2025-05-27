@@ -53,6 +53,11 @@ X multiples rebonds sur diverses surfaces (récursif)
 /*pour un point à la surface d'une sphere*/
 float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera);
 
+/*pour un point à la surface d'un plan*/
+/*avec ombres des sphères*/
+float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, sph_t** spheres, int nb_sphe);
+
+
 
 
 #endif
