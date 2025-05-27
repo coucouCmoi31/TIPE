@@ -55,6 +55,9 @@ int main (){
     printf("bleu -> H : %f, S : %f, L : %f\n", couleur_HSL.H, couleur_HSL.S, couleur_HSL.L);
     couleur_HSL = RGB_to_HSL(rouge);
     printf("rouge -> H : %f, S : %f, L : %f\n", couleur_HSL.H, couleur_HSL.S, couleur_HSL.L);
+    couleur_HSL.L *= 0.12;
+    SDL_Color couleur_RGB = HSL_to_RGB(couleur_HSL);
+    printf("rouge -> r : %d, g : %d, b : %d\n", couleur_RGB.r, couleur_RGB.g, couleur_RGB.b);
 
     pt_t* A = sp_pt(0, 0, 800);
     pt_t* B = sp_pt(500, 0, 800);
@@ -71,9 +74,9 @@ int main (){
     leslumi->tete->light = malloc(sizeof(lum_t));
     leslumi->tete->light->intensité = 5000;
     leslumi->tete->light->position = malloc(sizeof(pt_t));
-    leslumi->tete->light->position->x = 1200.0;
+    leslumi->tete->light->position->x = 0.0;
     leslumi->tete->light->position->y = 0.0;
-    leslumi->tete->light->position->z = 10000.0;
+    leslumi->tete->light->position->z = 5000.0;
 
     // MART_SetColorWindow(renderer, bleu_ciel);
     // MART_ColorSpirit(renderer, spirit, e, leslumi);

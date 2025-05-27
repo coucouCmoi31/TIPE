@@ -39,7 +39,7 @@ HSL_t RGB_to_HSL(SDL_Color col){
         H1=0;
         S1=0;
     } else {
-        S1=del/(1-abs(2*L1-1));
+        S1=del/(1-fabsf(2*L1-1));
         if (R1 == Cmax){
             float temp = (G1-B1)/del;
             H1=60*(modff(6, &temp));
@@ -57,10 +57,10 @@ HSL_t RGB_to_HSL(SDL_Color col){
 }
 
 SDL_Color HSL_to_RGB(HSL_t col){
-    float C = (1 - abs(2*col.L - 1))*col.S;
-    float H1s = col.H / 60;
-    float X = C * (1 - abs(modff(2, &H1s) - 1));
-    float m = col.L - C/2;
+    float C = (1 - fabsf(2.0*col.L - 1))*col.S;
+    float H1s = col.H / 60.0;
+    float X = C * (1 - fabsf(modff(2, &H1s) - 1));
+    float m = col.L - C/2.0;
     float R1;
     float G1;
     float B1;

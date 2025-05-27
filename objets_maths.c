@@ -133,7 +133,7 @@ float normale(vect_t* v){
 }
 
 float pro_scal(vect_t* a, vect_t* b){
-    return (a->vx*a->vx)+(a->vy*a->vy)+(a->vz*a->vz)+(b->vx*b->vx)+(b->vy*b->vy)+(b->vz*b->vz)-((a->vx-b->vx)*(a->vx-b->vx)+(a->vy-b->vy)*(a->vy-b->vy)+(a->vz-b->vz)*(a->vz-b->vz));
+    return ((a->vx*a->vx)+(a->vy*a->vy)+(a->vz*a->vz)+(b->vx*b->vx)+(b->vy*b->vy)+(b->vz*b->vz)-((a->vx-b->vx)*(a->vx-b->vx)+(a->vy-b->vy)*(a->vy-b->vy)+(a->vz-b->vz)*(a->vz-b->vz)))/2;
 }
 
 vect_t* norm_sph(sph_t* sph, pt_t* contact){
