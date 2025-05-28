@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include "objets_maths.h"
+#include "objets_graphique.h"
 
 /*toutes les structures sont dans le tas*/
 struct lumiere{
@@ -55,7 +56,7 @@ float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera);
 
 /*pour un point à la surface d'un plan*/
 /*avec ombres des sphères*/
-float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, sph_t** spheres, int nb_sphe);
+float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, obj_sph_t** spheres, int nb_sphe);
 
 
 

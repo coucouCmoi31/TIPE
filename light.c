@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <math.h>
+#include "objets_graphique.h"
 #include "objets_maths.h"
     
 float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera){
@@ -98,19 +99,25 @@ SDL_Color HSL_to_RGB(HSL_t col){
 }
 
 
-float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, sph_t** spheres, int nb_sphe){
+float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, obj_sph_t** spheres, int nb_sphe){
     pt_t* a_supp = malloc(sizeof(pt_t));
     pt_t* source = lums->tete->light->position;
     vect_t* v = vect_from_points(point, source);
-    float distance = normale(v);
-    float watt_r = lums->tete->light->intensité; // / (distance*distance);
-    float watt_eff = watt_r * pro_scal(v, pl->n);
+    // float distance = normale(v);
+    // float watt_r = lums->tete->light->intensité; // / (distance*distance);
+    normalise_vect(v);
+    normalise_vect(pl->n);
+    float watt_eff = pro_scal(v, pl->n);
     for (int i = 0; i < nb_sphe; i++){
-        if (1 == cr_vect_sphere(point, v, spheres[i],a_supp)) {
+        if (1 == cr_vect_sphere(point, v, spheres[i]->sph, a_supp)) {
             watt_eff = watt_eff/2;
         }
     } 
+    free(a_supp);
     free_vect(v);
+    if (watt_eff  < 0){
+        return 0;
+    }
     return watt_eff;
 }
 
