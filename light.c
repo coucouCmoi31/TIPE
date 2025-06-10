@@ -6,18 +6,26 @@
 #include "objets_graphique.h"
 #include "objets_maths.h"
     
-float point_lum_sph(pt_t* point, sph_t* sphe, ch_lum_t* lums, pt_t* camera){
+float point_lum_sph(pt_t* point, int i, ch_lum_t* lums, pt_t* camera, obj_sph_t** spheres, int nb_sphe){
     
     pt_t* source = lums->tete->light->position;
     vect_t* v = vect_from_points(point, source);
     normalise_vect(v);
-    vect_t* n = norm_sph(sphe, point);
+    vect_t* n = norm_sph(spheres[i]->sph, point);
     normalise_vect(n);
     float watt_eff = pro_scal(v, n);
 
     //FILE* f = fopen("out_lumi.txt", "a");
     //fprintf(f, "-%f-", watt_eff);
     //fclose(f);
+    pt_t* a_supp = malloc(sizeof(pt_t));
+    for (int j = 0; j < nb_sphe; j++){
+        if (j == i) continue;
+        if (1 == cr_vect_sphere(point, v, spheres[j]->sph, a_supp)) {
+            watt_eff = watt_eff/2;
+        }
+    } 
+    free(a_supp);
     free_vect(v);
     free_vect(n);
     if (watt_eff < 0){

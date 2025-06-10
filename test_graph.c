@@ -59,12 +59,12 @@ int main (){
     SDL_Color couleur_RGB = HSL_to_RGB(couleur_HSL);
     printf("rouge -> r : %d, g : %d, b : %d\n", couleur_RGB.r, couleur_RGB.g, couleur_RGB.b);
 
-    pt_t* A = sp_pt(0, 0, 800);
-    pt_t* B = sp_pt(500, 0, 800);
+    pt_t* A = sp_pt(0, 0, 1000);
+    pt_t* B = sp_pt(500, 0, 1000);
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
     spirit_t* spirit = sp_spirit_vide();
-    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(1500, 0, 800)), rouge));
-    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2000, 1000, 800)), bleu));
+    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2500, 0, 800)), rouge));
+    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2000, 600, 2000)), bleu));
     ajouter_plan_spirit(spirit, sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert));
 
     ch_lum_t* leslumi;
