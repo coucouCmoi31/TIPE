@@ -14,6 +14,7 @@ float point_lum_sph(pt_t* point, int i, ch_lum_t* lums, pt_t* camera, obj_sph_t*
     vect_t* n = norm_sph(spheres[i]->sph, point);
     normalise_vect(n);
     float watt_eff = pro_scal(v, n);
+    watt_eff = fminf(1, lums->tete->light->intensité * watt_eff);
 
     //FILE* f = fopen("out_lumi.txt", "a");
     //fprintf(f, "-%f-", watt_eff);
@@ -116,6 +117,7 @@ float point_lum_pl(pt_t* point, plan_i* pl, ch_lum_t* lums, pt_t* camera, obj_sp
     normalise_vect(v);
     normalise_vect(pl->n);
     float watt_eff = pro_scal(v, pl->n);
+    watt_eff = fminf(1, lums->tete->light->intensité * watt_eff);
     for (int i = 0; i < nb_sphe; i++){
         if (1 == cr_vect_sphere(point, v, spheres[i]->sph, a_supp)) {
             watt_eff = watt_eff/2;

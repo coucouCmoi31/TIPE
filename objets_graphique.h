@@ -5,6 +5,7 @@
 #include "objets_maths.h"
 
 /*toutes les structures sont dans le tas*/
+
 struct bloc_ecran{
     pt_t* A;
     plan_i* plan;

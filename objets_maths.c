@@ -118,7 +118,10 @@ int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie){
     }
     float racine = (-b - sqrtf(delta))/(2*a);
     if (racine <= 0.0){
-        return 0;
+        sortie->x = dep->x + racine * direc->vx ;
+        sortie->y = dep->y + racine * direc->vy ;
+        sortie->z = dep->z + racine * direc->vz ;
+        return 1;
     }
     else{
         sortie->x = dep->x + racine * direc->vx ;

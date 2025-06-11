@@ -64,7 +64,7 @@ int main (){
     bloc_ecran_t* e = sp_ecran(A, B, 500, 500);
     spirit_t* spirit = sp_spirit_vide();
     ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2500, 0, 800)), rouge));
-    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(2000, 600, 2000)), bleu));
+    ajouter_shp_spirit(spirit, sp_obj_sph(sp_sph(500, sp_pt(0, 0, 2000)), bleu));
     ajouter_plan_spirit(spirit, sp_obj_plan(sp_plan(sp_vect(0, 0, 1), sp_pt(0, 0, 0)), vert));
 
     ch_lum_t* leslumi;
@@ -72,11 +72,11 @@ int main (){
     leslumi->tete = malloc(sizeof(mai_lum_t));
     leslumi->tete->suivant = NULL;
     leslumi->tete->light = malloc(sizeof(lum_t));
-    leslumi->tete->light->intensité = 5000;
+    leslumi->tete->light->intensité = 1.0;
     leslumi->tete->light->position = malloc(sizeof(pt_t));
     leslumi->tete->light->position->x = 0.0;
     leslumi->tete->light->position->y = 0.0;
-    leslumi->tete->light->position->z = 5000.0;
+    leslumi->tete->light->position->z = 2300.0;
 
     // MART_SetColorWindow(renderer, bleu_ciel);
     // MART_ColorSpirit(renderer, spirit, e, leslumi);
