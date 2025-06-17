@@ -25,4 +25,6 @@ int MART_ColorSpiritOnePixel(SDL_Renderer* renderer, int cx, int cy, spirit_t* s
 
 int MART_ColorSpirit(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e, ch_lum_t* leslumi);
 
+int MART_ColorSpiritLess(SDL_Renderer* renderer, spirit_t* spirit, bloc_ecran_t* e, ch_lum_t* leslumi);
+
 #endif

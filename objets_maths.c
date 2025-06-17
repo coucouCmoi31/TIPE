@@ -121,7 +121,7 @@ int cr_vect_sphere(pt_t* dep, vect_t* direc, sph_t* sphe, pt_t* sortie){
         sortie->x = dep->x + racine * direc->vx ;
         sortie->y = dep->y + racine * direc->vy ;
         sortie->z = dep->z + racine * direc->vz ;
-        return 1;
+        return 0;
     }
     else{
         sortie->x = dep->x + racine * direc->vx ;

@@ -76,7 +76,7 @@ int main (){
     leslumi->tete->light->position = malloc(sizeof(pt_t));
     leslumi->tete->light->position->x = 0.0;
     leslumi->tete->light->position->y = 0.0;
-    leslumi->tete->light->position->z = 2300.0;
+    leslumi->tete->light->position->z = 10000.0;
 
     // MART_SetColorWindow(renderer, bleu_ciel);
     // MART_ColorSpirit(renderer, spirit, e, leslumi);
@@ -117,18 +117,17 @@ int main (){
                 } else if (events.key.keysym.sym == SDLK_d){
                     rotation_largeur_ecran(e, -0.2);
                 } else if (events.key.keysym.sym == SDLK_LCTRL){
-                    deplace_ecran_vect(e, 0, 0, 100);
+                    deplace_ecran(e, 0, 0, -100);
                 } else if (events.key.keysym.sym == SDLK_SPACE){
-                    deplace_ecran_vect(e, 0, 0, -100);
+                    deplace_ecran(e, 0, 0, 100);
                 }
             }
         }
-        MART_SetColorWindow(renderer, bleu_ciel);
 
-        MART_ColorSpirit(renderer, spirit, e, leslumi);
+        MART_ColorSpiritLess(renderer, spirit, e, leslumi);
 
         sprintf(aff, "fps : %.2f", fps);
-        print(renderer, police, aff, 10, 10, noir);
+        print(renderer, police, aff, 10, 10, blanc);
         SDL_RenderPresent(renderer);
 
         last_tick = ticks;
